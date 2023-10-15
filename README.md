@@ -21,6 +21,7 @@ When wielding C++, you should understand these topics:
     - Value vs. reference/pointer
     - Constructor/destructor
     - Copy/move semantics
+- `const`-correctness
 - Ownership & lifetime
     - Scope-based resource management (i.e. RAII)
 - Dynamic memory:
@@ -65,40 +66,14 @@ When wielding C++, you should understand these topics:
       sudo apt install cmake
       ```
 
-- Create a folder for your project, open it in Visual Studio Code
+- Inspect the provided [example](example/) project
 
-- Create `main.cpp` with this content:
-    ```c++
-    #include <iostream>
-
-    int main()
-    {
-        std::cout << "Hello World\n";
-        return 0;
-    }
-    ```
-
-- Create `CMakeLists.txt` with this content:
-    ```cmake
-    cmake_minimum_required(VERSION 3.10)
-
-    project(hello LANGUAGES C CXX)
-    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-    add_executable(hello main.cpp)
-    set_target_properties(hello PROPERTIES CXX_STANDARD 20)
-    target_compile_options(hello PRIVATE -Wall -Wextra -g)
-    ```
-
-- To build and run, issue the following commands in your project folder:
+- To build and run, issue the following commands in the example folder:
     ```
     cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug  # only needed the first time
     make -C build
     ./build/hello
     ```
-
-- After building the project once, point Visual Studio Code to the `build/compile_commands.json` to get auto-completion to work.
-  See [VSCode FAQ](https://code.visualstudio.com/docs/cpp/faq-cpp#_how-do-i-get-intellisense-to-work-correctly).
 
 ### In the Browser
 

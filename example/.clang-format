@@ -1,0 +1,35 @@
+---
+BasedOnStyle: LLVM
+ColumnLimit: 120
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
+PointerAlignment: Left
+
+# Visually separate function signature from body
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+
+# Pull backslashes to the left due to increased column limit
+AlignEscapedNewlines: DontAlign
+
+# Compress simple statements
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+
+# Improve alignment of multi-line
+AlignOperands: AlignAfterOperator
+BreakBeforeBinaryOperators: NonAssignment
+PenaltyBreakAssignment: 25
+
+# Increase readability of templates
+AlwaysBreakTemplateDeclarations: true
+
+# Increase readability of large constructor initializers
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+
+Standard: c++17
+...
