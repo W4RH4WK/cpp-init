@@ -38,6 +38,7 @@ When wielding C++, you should understand these topics:
     - Value vs. reference/pointer
     - Constructor/destructor
     - Copy/move semantics
+    - [Rule of five / zero](https://en.cppreference.com/w/cpp/language/rule_of_three)
 - `const`-correctness
 - Ownership & lifetime
     - Scope-based resource management (i.e. RAII)
@@ -46,7 +47,7 @@ When wielding C++, you should understand these topics:
     - Prefer `std::unique_ptr` to `std::shared_ptr`
     - Pick the right container (see sequential vs. associative container)
 - Common bugs:
-    - Use of uninitialized variable
+    - Use of uninitialized variables
     - Use-after-free
     - Iterator invalidation
     - Undefined behavior
