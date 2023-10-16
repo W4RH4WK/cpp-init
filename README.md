@@ -2,15 +2,32 @@
 
 Since I encounter this question a lot lately, here's a summary of my typical answer along with some pointers.
 
-- First get familiar with C.
+## Should I learn C++?
+
+Depends on what your goal is.
+C++ is certainly not dead, but better alternatives may exist, depending on your use-case.
+Consider [Go](https://go.dev/) and [Rust](https://www.rust-lang.org/) before deciding to venture forth into C++.
+
+Still here? Alright.
+
+## Where do I start?
+
+- First, get familiar with C.
   For this I can recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/).
 
 - Once you are somewhat fluent with C, you may move on to C++.
   [Learn C++](https://www.learncpp.com/) is an excellent guide that has you covered.
 
-- If you need technical information on a language feature or library component, search [C++ reference](https://cppreference.com/).
+- If you need technical information on a language feature or library component, consult [C++ reference](https://cppreference.com/).
 
 - Once you are somewhat familiar with C++, read through the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) and see what makes sense for you.
+  This also gives you some idea about how certain language features are supposed to be used.
+
+- Pick up [Git](https://git-scm.com/) along the way.
+  Strictly speaking, Git is not necessary for C++, yet any modern programmer should be familiar with Git and use it in their projects.
+
+The most important aspect is that you get your hands dirty and start building things early on.
+Theory is important, but practice is still paramount!
 
 ## Which Topics are Essential?
 
@@ -44,7 +61,7 @@ When wielding C++, you should understand these topics:
 
 ### Windows
 
-- Use [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
+- Use [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
     - Install with *Desktop development with C++*
     - When creating a new project, select *Empty Project (C++)*
     - From here, just add a source file and you are good to go.
@@ -80,7 +97,7 @@ When wielding C++, you should understand these topics:
 [Compiler Explorer](https://godbolt.org/) allows you write, compile, and run small C++ programs.
 You can even use third-party libraries.
 
-Whenever you have a problem / question, create a small example of your issue in Compiler Explorer and provide a short link (top-right *Share*) to it along with your question.
+Whenever you have a problem or question, create a small example of your issue in Compiler Explorer and provide a short link (top-right *Share*) to it along with your question.
 
 ## Should I use a Build System?
 
@@ -88,3 +105,8 @@ In general, yes.
 A build system organizes and documents the build process and allows other tools, like IDEs, to correctly handle your project (e.g. auto-completion).
 
 My personal preference is [CMake](https://cmake.org/), but [Premake](https://premake.github.io/) is also a pretty common choice.
+
+## Should I use AI assisted tooling?
+
+Of course you can have conversations with ChatGPT (or similar) about C++ related topics, just always be critical of the answers you get.
+However, AI assisted tooling should **not** be a part of your workflow at this point.
