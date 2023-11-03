@@ -20,7 +20,7 @@ AlignEscapedNewlines: DontAlign
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: Inline
 
-# Improve alignment of multi-line
+# Improve alignment of multi-line expressions
 AlignOperands: AlignAfterOperator
 BreakBeforeBinaryOperators: NonAssignment
 PenaltyBreakAssignment: 25

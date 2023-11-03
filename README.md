@@ -13,7 +13,7 @@ Still here? Alright.
 ## Where do I start?
 
 - First, get familiar with C.
-  For this I can recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/).
+  For this I recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/).
 
 - Once you are somewhat fluent with C, you may move on to C++.
   [Learn C++](https://www.learncpp.com/) is an excellent guide that has you covered.
@@ -21,10 +21,14 @@ Still here? Alright.
 - If you need technical information on a language feature or library component, consult [C++ reference](https://cppreference.com/).
 
 - Once you are somewhat familiar with C++, read through the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) and see what makes sense for you.
-  This also gives you some idea about how certain language features are supposed to be used.
+  This also gives you some idea on how certain language features are supposed to be used.
 
 - Pick up [Git](https://git-scm.com/) along the way.
   Strictly speaking, Git is not necessary for C++, yet any modern programmer should be familiar with Git and use it in their projects.
+
+- Pick up a scripting language like [Python](https://www.python.org/) or [Ruby](https://www.ruby-lang.org/) at some point as well.
+  Certain tasks are better suited for a scripting language, knowing at least one will increase your productivity immensely.
+  Oh, and stay away from JavaScript!
 
 The most important aspect is that you get your hands dirty and start building things early on.
 Theory is important, but practice is still paramount!
