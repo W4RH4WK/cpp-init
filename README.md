@@ -22,6 +22,7 @@ Still here? Alright.
 
 - Once you are somewhat familiar with C++, read through the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) and see what makes sense for you.
   This also gives you some idea on how certain language features are supposed to be used.
+  You may also be interested in [my personal opinions](opinions.md).
 
 - Pick up [Git](https://git-scm.com/) along the way.
   Strictly speaking, Git is not necessary for C++, yet any modern programmer should be familiar with Git and use it in their projects.
@@ -110,6 +111,13 @@ In general, yes.
 A build system organizes and documents the build process and allows other tools, like IDEs, to correctly handle your project (e.g. auto-completion).
 
 My personal preference is [CMake](https://cmake.org/), but [Premake](https://premake.github.io/) is also a pretty common choice.
+
+## Where can I find exercises for beginners?
+
+For this, I recommend [Advent of Code](https://adventofcode.com/2020).
+It's an annual advent calendar where you find a programming exercises behind each day.
+The exercise is not specific to any programming language.
+You can pick exercises from previous years and look up solutions on GitHub if you get stuck.
 
 ## Should I use AI assisted tooling?
 
