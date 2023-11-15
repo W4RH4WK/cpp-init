@@ -88,6 +88,26 @@ And chances are pretty high that your custom re-implementation will have similar
 
 So, unless you have a *really* good point not to use the standard library, just use the standard library!
 
+## What about C-Style C++?
+
+People often throw around the term C-Style C++ or [Orthodox C++](https://gist.github.com/bkaradzic/2e39896bc7d8c34e042b) when talking about which language features to use or to avoid.
+To me, these discussions often seem like a straw man argument that come from a lack of understanding.
+Sure, there are lots of issues with C++, but many features can improve code quality.
+
+For instance, I often hear people recommending `printf` over `std::cout` because it's *more natural* or more similar to other language's printing mechanism.
+What's often missing from this discussion is `printf`'s lack of type-safety; `printf` completely trusts the format string you provide and expects arguments to match up with the format specifiers (e.g. `%s`).
+Accidentally mixing up the argument list often results in undefined behavior, crashing the program — if you are lucky!
+With `std::cout` this mistake cannot happen; the compiler enforces that every type you feed into `std::cout` is printable, otherwise you get an error **at compile-time**.
+
+Similar problems arise when using `malloc` / `free` over smart pointers.
+Yes, smart pointers are not a silver bullet; you can still break your program with them.
+But it's typically harder to do so for the average C++ programmer, compared to doing manual memory management.
+Rust adopting the concept of RAII is a good indicator that it's worth wrapping your head around.
+
+So, when you decide for or against using certain language features, don't blindly accept someone else's recommendation.
+Base your decision on a clear understand of the benefits and drawbacks.
+If you think you are missing something, ask your peers why, or why not to use the feature and really pressure for a **technical** answer.
+
 ## Modules are dead on arrival
 
 C++ modules were standardized with the C++20 standard.
