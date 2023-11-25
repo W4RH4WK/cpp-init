@@ -45,6 +45,27 @@ Certain identifiers are prefixed to make their *impact* easily recognizable in c
 File names do not use upper-case letters to avoid issues with Windows being case-insensitive.
 Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html).
 
+## On Code Duplication
+
+The urge to minimize code duplication is often thrown around when people talk about *clean* code.
+Code duplication **can** indeed be a source for bugs, but not every form of code duplication is equally problematic or avoidable.
+I tend to distinguish between 3 different categories:
+
+- **Avoidable code duplication:** is code that is duplicated because it was easier to copy-paste an already existing code snippet and modify it slightly without putting a little bit of thought into it.
+  This form of code duplication is characterized by you **always** being better off removing the duplication by refactoring the code.
+
+- **Unavoidable code duplication:** is a form of code duplication (or boilerplate code) that we cannot avoid because of technical reasons.
+  This commonly happens when our programming language or framework is missing some crucial feature (e.g. reflection).
+  While ways to work around these limitations may exist, they often create more problems and are commonly not worth the additional complexity.
+  Here, the tradeoff is in favor of keeping the code duplication over introducing a new, intrusive mechanism that mitigates the duplication.
+  
+  Note: when code duplication is unavoidable, you can still make an effort to minimize the actual lines of code needed for each duplication.
+  I'd rather duplicate a single function call than a 30-line block of code, at each location.
+
+- **Critical code duplication:** is code that is duplicated because the current architecture doesn't allow or support a from where less duplication is possible.
+  Here, one has to inspect the situation thoroughly and weigh whether it'd be better to keep the current architecture and accept code duplication, or to change the architecture allowing the duplication to be removed.
+  The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
+
 ## Compile times ain't the issue
 
 Suffering from long compile-times?
