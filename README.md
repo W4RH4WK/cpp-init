@@ -48,9 +48,10 @@ When wielding C++, you should understand these topics:
 - Ownership & lifetime
     - Scope-based resource management (i.e. RAII)
 - Dynamic memory:
-    - Avoid `new`/`delete`
+    - Avoid `new` / `delete`
     - Prefer `std::unique_ptr` to `std::shared_ptr`
     - Pick the right container (see sequential vs. associative container)
+      - Use `std::array` over native arrays
 - Common bugs:
     - Use of uninitialized variables
     - Use-after-free
@@ -61,7 +62,7 @@ When wielding C++, you should understand these topics:
     - Enable debug symbols
     - Enable optimizations
     - Address sanitizer
-- Debugger
+- Using a debugger
 
 ## Which Development Environment?
 
@@ -114,7 +115,7 @@ My personal preference is [CMake](https://cmake.org/), but [Premake](https://pre
 
 ## Where can I find exercises for beginners?
 
-For this, I recommend [Advent of Code](https://adventofcode.com/2020).
+For this, I recommend [Advent of Code](https://adventofcode.com/events).
 It's an annual advent calendar where you find a programming exercises behind each day.
 The exercise is not specific to any programming language.
 You can pick exercises from previous years and look up solutions on GitHub if you get stuck.
