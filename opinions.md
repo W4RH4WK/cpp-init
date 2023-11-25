@@ -66,6 +66,30 @@ I tend to distinguish between 3 different categories:
   Here, one has to inspect the situation thoroughly and weigh whether it'd be better to keep the current architecture and accept code duplication, or to change the architecture allowing the duplication to be removed.
   The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
 
+## On Singletons
+
+Singletons are a controversial design pattern that are often used without putting a lot of thought into them.
+Usually they are used because of (one of) the following reasons:
+
+- It doesn't make sense to have multiple instances of this class
+- We need a way to access this component from multiple locations across the code-base
+
+Furthermore, the canonical singleton pattern uses lazy initialization, meaning the instance is constructed on first use.
+This way, the initialization order of singletons may not be defined statically.
+
+Here's my idea of breaking these things apart into something that is more sensible:
+
+- If multiple instances don't make sense, don't use a class.
+  Use a dedicated namespace where functions mutate global variables hidden inside a source file.
+  This way you just call regular functions to mutate global state.
+  Provide an `initialize()` and `finalize()` function for well defined setup and teardown.
+  Implementation details can be hidden inside the source file contrary to using a class where private members are still visible in the header file.
+
+- When you only need easy access to an instance, but there is no real problem with having multiple instances, just provide a global default instance.
+  I prefer to use `std::optional` for the default instance, because it forces me to initialize it explicitly and gives me the option to destroy default instances in a custom order.
+
+Note that neither of these approaches are thread-safe — which is fine because you should initialize them at the start of your application before launching additional threads.
+
 ## Compile times ain't the issue
 
 Suffering from long compile-times?
