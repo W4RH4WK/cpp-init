@@ -51,7 +51,6 @@ When wielding C++, you should understand these topics:
     - Avoid `new` / `delete`
     - Prefer `std::unique_ptr` to `std::shared_ptr`
     - Pick the right container (see sequential vs. associative container)
-      - Use `std::array` over native arrays
 - Common bugs:
     - Use of uninitialized variables
     - Use-after-free
@@ -71,7 +70,7 @@ When wielding C++, you should understand these topics:
 - Use [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/)
     - Install with *Desktop development with C++*
     - When creating a new project, select *Empty Project (C++)*
-    - From here, just add a source file and you are good to go.
+    - From here, just add a source file and you are good to go
 
 ### Linux / macOS
 

@@ -45,7 +45,27 @@ Certain identifiers are prefixed to make their *impact* easily recognizable in c
 File names do not use upper-case letters to avoid issues with Windows being case-insensitive.
 Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html).
 
-## On Code Duplication
+## Where to put things
+
+- If it can be `const`, it should be `const`
+- Minimize variable scope
+  - Prefer local variables
+  - Prefer static locals to global variables
+  - Hide global variables inside source files if possible
+- Parameters
+  - Take primitives by value
+  - Take structs and classes by `const&`
+  - Avoid output parameters
+  - Use sensible return types
+- Heap allocation
+  - Avoid unnecessary heap allocations
+  - Avoid using `new` / `delete` or `malloc` / `free`
+  - Prefer `std::unique_ptr` over `std::shared_ptr`
+  - Use containers when you have multiple elements
+    - `std::array` and `std::vector` should be your default containers
+    - Prefer `std::array` over native arrays
+
+## On code duplication
 
 The urge to minimize code duplication is often thrown around when people talk about *clean* code.
 Code duplication **can** indeed be a source for bugs, but not every form of code duplication is equally problematic or avoidable.
@@ -66,7 +86,7 @@ I tend to distinguish between 3 different categories:
   Here, one has to inspect the situation thoroughly and weigh whether it'd be better to keep the current architecture and accept code duplication, or to change the architecture allowing the duplication to be removed.
   The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
 
-## On Singletons
+## On singletons
 
 Singletons are a controversial design pattern that are often used without putting a lot of thought into them.
 Usually they are used because of (one of) the following reasons:
@@ -133,7 +153,7 @@ And chances are pretty high that your custom re-implementation will have similar
 
 So, unless you have a *really* good point not to use the standard library, just use the standard library!
 
-## What about C-Style C++?
+## What about C-style C++?
 
 People often throw around the term C-Style C++ or [Orthodox C++](https://gist.github.com/bkaradzic/2e39896bc7d8c34e042b) when talking about which language features to use or to avoid.
 To me, these discussions often seem like a straw man argument that come from a lack of understanding.
