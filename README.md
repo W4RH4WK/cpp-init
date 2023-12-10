@@ -72,7 +72,7 @@ When wielding C++, you should understand these topics:
     - When creating a new project, select *Empty Project (C++)*
     - From here, just add a source file and you are good to go
 
-### Linux / macOS
+### Linux
 
 - Use [Visual Studio Code](https://code.visualstudio.com/)
     - Install the [C/C++ extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
@@ -124,3 +124,20 @@ You can pick exercises from previous years and look up solutions on GitHub if yo
 
 Of course you can have conversations with ChatGPT (or similar) about C++ related topics, just always be critical of the answers you get.
 However, AI assisted tooling should **not** be a part of your workflow at this point.
+
+## I am having troubles?
+
+- Try to solve the issue yourself first.
+  Use search engines and message boards in combination with logical thinking.
+  Only after spending some time on the problem, you are pardoned to ask for help.
+
+- Provide detailed information:
+  1. State what exactly you are trying to achieve.
+     A clear definition is important to rule out an [XY problem](https://en.wikipedia.org/wiki/XY_problem).
+  2. State what you have done so far and describe your current state.
+  3. Describe exactly which operation is causing you trouble.
+     Provide information on what you are doing (e.g. which command you are running), what the error is (e.g. console output of the program), and what outcome you'd expect.
+  4. Shortly state which other approaches you have already tried.
+  5. Add auxiliary information that you deem important, like which operating system and software versions you are using.
+
+- If you are dealing with a code related issue, put together a minimum (not) working example — preferably on [Compiler Explorer](https://godbolt.org/) for C/C++.
