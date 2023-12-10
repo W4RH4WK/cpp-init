@@ -111,6 +111,7 @@ In general, yes.
 A build system organizes and documents the build process and allows other tools, like IDEs, to correctly handle your project (e.g. auto-completion).
 
 My personal preference is [CMake](https://cmake.org/), but [Premake](https://premake.github.io/) is also a pretty common choice.
+There is a more advanced example available in [`example2`](example2/), featuring multiple CMake targets, tests, benchmarks, and dependencies.
 
 ## Where can I find exercises for beginners?
 
