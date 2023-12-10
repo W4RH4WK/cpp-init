@@ -13,4 +13,6 @@ target_precompile_headers(example PUBLIC example_pch.hpp)
 add_executable(example_tests ${example_tests_srcs})
 example_compile_options(example_tests)
 target_link_libraries(example_tests PRIVATE example Catch2::Catch2WithMain)
-add_test(NAME example_tests COMMAND $<TARGET_FILE:example_tests>)
+
+include(CTest)
+catch_discover_tests(example_tests)
