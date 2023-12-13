@@ -105,6 +105,9 @@ Here's my idea of breaking these things apart into something that is more sensib
   Provide an `initialize()` and `finalize()` function for well defined setup and teardown.
   Implementation details can be hidden inside the source file contrary to using a class where private members are still visible in the header file.
 
+  However, this design is not easily testable.
+  You cannot simply mock a free function the same way you could an implementation hidden behind an interface.
+
 - When you only need easy access to an instance, but there is no real problem with having multiple instances, just provide a global default instance.
   I prefer to use `std::optional` for the default instance because it forces me to initialize it explicitly.
   The order of destruction can also be customized this way.

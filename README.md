@@ -125,7 +125,7 @@ You can pick exercises from previous years and look up solutions on GitHub if yo
 Of course you can have conversations with ChatGPT (or similar) about C++ related topics, just always be critical of the answers you get.
 However, AI assisted tooling should **not** be a part of your workflow at this point.
 
-## I am having troubles?
+## Trouble Shooting
 
 - Try to solve the issue yourself first.
   Use search engines and message boards in combination with logical thinking.
