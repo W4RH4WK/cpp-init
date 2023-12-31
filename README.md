@@ -60,7 +60,7 @@ When wielding C++, you should understand these topics:
     - Enable warnings
     - Enable debug symbols
     - Enable optimizations
-    - Address sanitizer
+    - Sanitizers (most notably address sanitizer)
 - Using a debugger
 
 ## Which Development Environment?
@@ -140,4 +140,7 @@ However, AI assisted tooling should **not** be a part of your workflow at this p
   4. Shortly state which other approaches you have already tried.
   5. Add auxiliary information that you deem important, like which operating system and software versions you are using.
 
-- If you are dealing with a code related issue, put together a minimum (not) working example — preferably on [Compiler Explorer](https://godbolt.org/) for C/C++.
+If you are dealing with a C/C++ related issue:
+- Enable and fix warnings in your code (`-Wall -Wextra` at least on GCC / Clang)
+- Build and run your application with address sanitizer enabled
+- Put together a minimum (not) working example — preferably on [Compiler Explorer](https://godbolt.org/)
