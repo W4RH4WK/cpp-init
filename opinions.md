@@ -14,8 +14,8 @@ Also, put the `public` part first, then `protected`, then `private`.
 
 ## Member function vs. regular function
 
-Often you have the choice of implementing something as a member function or a regular function.
-My rule of thumb is to create a member function whenever the functionality is related **primarily** to **one instance** of the type (e.g. `Vector2::length`)
+Often you have the choice of writing a function as a member function or a regular (free-standing) function.
+My rule of thumb is to create a member function whenever it is related **primarily** to **one instance** of the type (e.g. `Vector2::length`)
 If the implementation primarily deals with 2 (or more) instances of the same type, I prefer a regular function (e.g. `lerp` for `Vector2`).
 
 Sometimes I opt for a static member function instead of a regular function when having the typename as prefix for the function call increases readability.
@@ -23,6 +23,7 @@ Consider `Vector2::dot` vs. just `dot`.
 
 A common alternative to my rule of thumb is to focus on the public interface of a type.
 If some functionality can be implemented by using just the public interface of a type, implement that functionality as a regular function. [[C++ Core Guidelines C.4]](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c4-make-a-function-a-member-only-if-it-needs-direct-access-to-the-representation-of-a-class)
+I dislike this approach as changes to the public interface of a type quickly cascade to functions outside the class.
 
 ## Naming conventions
 
@@ -42,12 +43,11 @@ Certain identifiers are prefixed to make their *impact* easily recognizable in c
 - Prefix static member variables with `sm_`
 - Prefix interface types with `I` (e.g. `IAudioServer`)
 
-File names do not use upper-case letters to avoid issues with Windows being case-insensitive.
+Filenames do not use upper-case letters to avoid issues with Windows being case-insensitive.
 Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html).
 
 ## Where to put things
 
-- If it can be `const`, it should be `const`
 - Minimize variable scope
   - Prefer local variables
   - Prefer static locals to global variables
@@ -55,8 +55,7 @@ Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/d
 - Parameters
   - Take primitives by value
   - Take structs and classes by `const&`
-  - Avoid output parameters
-  - Use sensible return types
+  - Prefer return values to output parameters
 - Heap allocation
   - Avoid unnecessary heap allocations
   - Avoid using `new` / `delete` or `malloc` / `free`
@@ -64,6 +63,16 @@ Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/d
   - Use containers when you have multiple elements
     - `std::array` and `std::vector` should be your default containers
     - Prefer `std::array` over native arrays
+
+## Constness
+
+In general, the fewer things are mutable, the better.
+Especially long-living variables should be marked `const` whenever possible.
+
+I prefer to omit the `const` for parameters and short-lived variables to ease readability.
+However, marking them `const` as well is technically better.
+
+`const` should not be used when returning values or for non-static member variables (prefer a getter here).
 
 ## On code duplication
 
@@ -88,7 +97,7 @@ I tend to distinguish between 3 different categories:
 
 ## On singletons
 
-Singletons are a controversial design pattern that are often used without putting a lot of thought into them.
+Singletons are a controversial design pattern that is often used without putting a lot of thought into it.
 Usually they are used because of (one of) the following reasons:
 
 - It doesn't make sense to have multiple instances of this class
@@ -101,20 +110,37 @@ Here's my idea of breaking these things apart into something that is more sensib
 
 - If multiple instances don't make sense, don't use a class.
   Use a dedicated namespace where functions mutate global variables hidden inside a source file.
-  This way you just call regular functions to mutate global state.
+  This way you just call free functions to mutate global state.
   Provide an `initialize()` and `finalize()` function for well defined setup and teardown.
   Implementation details can be hidden inside the source file contrary to using a class where private members are still visible in the header file.
 
   However, this design is not easily testable.
-  You cannot simply mock a free function the same way you could an implementation hidden behind an interface.
+  You cannot simply mock a free function the same way you could mock an implementation hidden behind an interface.
 
 - When you only need easy access to an instance, but there is no real problem with having multiple instances, just provide a global default instance.
   I prefer to use `std::optional` for the default instance because it forces me to initialize it explicitly.
   The order of destruction can also be customized this way.
 
-  If an up-cast desired (exposing an interface instead of the actual implementation), use `std::unique_ptr` instead, the API is almost the same.
+  If an up-cast is desired (exposing an interface instead of the actual implementation), use `std::unique_ptr` instead, the API is almost the same.
 
 Note that neither of these approaches is thread-safe — which is fine because you should initialize them at the start of your application before launching additional threads.
+
+## About Exceptions
+
+Some guides on modern C++ recommend the use of exceptions for (exceptional) error handling.
+Exceptions have always been a problematic topic for me — to the point where I'd rather avoid them all together.
+The primary problem for me is that a function's signature does not communicate whether and which exceptions can be thrown by the function.
+I'd effectively have to employ catch-all cases to reliably handle errors.
+Furthermore, the compiler won't issue warnings in case I forget to handle a failure case appropriately — an exception will just be passed up the call stack commonly leading to a crash.
+
+Since exceptions are designed for *exceptional* circumstances, we need a different mechanism for *regular* error handling anyway.
+And for this, I use the function's return value, typically with a dedicated error type that is also marked `[[nodiscard]]`.
+Whether the error type is a result type like `std::expected` or just an error enum depends on the project — I haven't settled on what's more ergonomic to use yet.
+(In the case of an error enum, outputs are realized using output-parameters.)
+
+The most complicated mechanism here is dealing with object construction failure.
+Either make objects always constructible and check validity afterwards (similar to how `std::ifstream` behaves).
+Or construct the object through a static member function — consider returning a `std::unique_ptr` for objects that are not moveable.
 
 ## Compile times ain't the issue
 
