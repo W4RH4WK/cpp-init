@@ -97,33 +97,20 @@ I tend to distinguish between 3 different categories:
 
 ## On singletons
 
-Singletons are a controversial design pattern that is often used without putting a lot of thought into it.
-Usually they are used because of (one of) the following reasons:
+I quite dislike the canonical singleton pattern in C++ where the singleton instance is created lazily on first use (typically from a static local).
+The issue is that this gives you barely any control over the construction and destruction of the instance.
+Instead, I prefer to make the singleton instance accessible directly — either by exposing it as a global variable, or by providing dedicated `initialize` / `finalize` functions.
 
-- It doesn't make sense to have multiple instances of this class
+However, I also think that the singleton pattern is overused in general and that the common requirements are actually orthogonal:
+
+- It doesn't make sense to have multiple instances of this class; vs.
 - We need a way to access this component from multiple locations across the code-base
 
-Furthermore, the canonical singleton pattern uses lazy initialization, meaning the instance is constructed on first use.
-This way, the initialization order of singletons may not be defined statically.
+In [`example2`](example2/) you can find a logger and platform abstraction mechanism.
+The logger mechanism is not a singleton, there's just a default instance.
+The platform abstraction is realized as a singleton with dedicated setup and teardown functions, as well as the ability to use a mock implementation for testing.
 
-Here's my idea of breaking these things apart into something that is more sensible:
-
-- If multiple instances don't make sense, don't use a class.
-  Use a dedicated namespace where functions mutate global variables hidden inside a source file.
-  This way you just call free functions to mutate global state.
-  Provide an `initialize()` and `finalize()` function for well defined setup and teardown.
-  Implementation details can be hidden inside the source file contrary to using a class where private members are still visible in the header file.
-
-  However, this design is not easily testable.
-  You cannot simply mock a free function the same way you could mock an implementation hidden behind an interface.
-
-- When you only need easy access to an instance, but there is no real problem with having multiple instances, just provide a global default instance.
-  I prefer to use `std::optional` for the default instance because it forces me to initialize it explicitly.
-  The order of destruction can also be customized this way.
-
-  If an up-cast is desired (exposing an interface instead of the actual implementation), use `std::unique_ptr` instead, the API is almost the same.
-
-Note that neither of these approaches is thread-safe — which is fine because you should initialize them at the start of your application before launching additional threads.
+Thread-safety is generally not an issue here since all such components should be set up at program start, by the main thread, in a well defined order.
 
 ## About Exceptions
 
