@@ -207,6 +207,6 @@ Also, at this point I don't entirely understand what's the point:
 - Module names are not coupled to namespaces like it's done in most other languages.
 - Modules are completely unrelated to any form of dependency management or packaging structure.
 - An internal (i.e. un-exported) type can be exposed by an exported function.
-  [In Rust, this is an error.](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=5561de88a30de336b6727bd15497645a)
+  [In Rust, this is an error.](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=feb8e3543fb145633fa7)
 
 Overall, modules appear to just add a ton of complexity to the C++ infrastructure (compilers, IDEs, package managers, etc.) without solving a real issue.
