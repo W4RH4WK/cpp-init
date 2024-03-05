@@ -137,6 +137,7 @@ However, AI assisted tooling should **not** be a part of your workflow at this p
   2. State what you have done so far and describe your current state.
   3. Describe exactly which operation is causing you trouble.
      Provide information on what you are doing (e.g. which command you are running), what the error is (e.g. console output of the program), and what outcome you'd expect.
+     Provide the **full** console output, not just the line you think contains the error.
   4. Shortly state which other approaches you have already tried.
   5. Add auxiliary information that you deem important, like which operating system and software versions you are using.
 
@@ -144,3 +145,9 @@ If you are dealing with a C/C++ related issue:
 - Enable and fix warnings in your code (`-Wall -Wextra` at least on GCC / Clang)
 - Build and run your application with address sanitizer enabled
 - Put together a minimum (not) working example — preferably on [Compiler Explorer](https://godbolt.org/)
+
+If you are having issues with an interactive application that requires various third-party dependencies:
+- Put together a minimum (not) working example
+- Make sure everything can be built out-of-the-box with either CMake, Premake, or a Visual Studio solution
+- Put this example somewhere for other people to download, preferably on GitHub
+- People often don't have the time to go through a manual setup process involving multiple complicated steps just to help you out
