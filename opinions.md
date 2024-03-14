@@ -189,7 +189,7 @@ But it's typically harder to do so for the average C++ programmer, compared to d
 Rust adopting the concept of RAII is a good indicator that it's worth wrapping your head around.
 
 So, when you decide for or against using certain language features, don't blindly accept someone else's recommendation.
-Base your decision on a clear understand of the benefits and drawbacks.
+Base your decision on a clear understanding of the benefits and drawbacks.
 If you think you are missing something, ask your peers why, or why not to use the feature and really pressure for a **technical** answer.
 
 ## Modules are dead on arrival
