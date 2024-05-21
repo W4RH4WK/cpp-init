@@ -195,7 +195,7 @@ If you think you are missing something, ask your peers why, or why not to use th
 ## Modules are dead on arrival
 
 C++ modules were standardized with the C++20 standard.
-3 years later, C++ modules are still not usable in general; many third-party libraries don't provide them and even compiler support is incomplete.
+3 years later, C++ modules are still not usable in general; [many third-party libraries don't provide them](https://arewemodulesyet.org/) and even compiler support is incomplete.
 
 Also, at this point I don't entirely understand what's the point:
 
@@ -207,6 +207,6 @@ Also, at this point I don't entirely understand what's the point:
 - Module names are not coupled to namespaces like it's done in most other languages.
 - Modules are completely unrelated to any form of dependency management or packaging structure.
 - An internal (i.e. un-exported) type can be exposed by an exported function.
-  [In Rust, this is an error.](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=feb8e3543fb145633fa7)
+  [In Rust, this is an error.](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=30516d465ebea8c8dbb7dec5b8ef1cf8)
 
 Overall, modules appear to just add a ton of complexity to the C++ infrastructure (compilers, IDEs, package managers, etc.) without solving a real issue.
