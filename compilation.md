@@ -141,17 +141,17 @@ Note that name mangling is **not** standardized.
 
 ## Manually Adding a Dependency
 
-When manually adding a new library dependency to your project, you have to provide the compiler with the header files, and the linker with the libraries.
+When manually adding a new library dependency to your project, you have to provide the compiler with the header files and the  libraries.
 
 Let's use [GLFW](https://github.com/glfw/glfw) as an example.
-The latest binary release [`glfw-3.4.bin.WIN64.zip`](https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip) (at the time of writing) contains a set of header files (inside the `include` directory) and libraries for various development environments.
-Note the `README.md` provide more insight into the purpose of the provided libraries.
+The latest (at the time of writing) binary release [`glfw-3.4.bin.WIN64.zip`](https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.bin.WIN64.zip)  contains a set of header files (inside the `include` directory) and libraries for various development environments.
+Note the `README.md` provides more insight into the different libraries.
 
 - Extract the `include` folder into your project
 
       glfw-3.4.bin.WIN64/include → PROJECT_ROOT/external/glfw/include
 
-- Pick the corresponding library and extract them as well
+- Pick the corresponding libraries and extract them as well
 
       glfw-3.4.bin.WIN64/lib-vc2022/glfw3.dll → PROJECT_ROOT/external/glfw/bin/win64/glfw3.dll
       glfw-3.4.bin.WIN64/lib-vc2022/glfw3dll.lib → PROJECT_ROOT/external/glfw/bin/win64/glfw3lib.dll
@@ -175,15 +175,15 @@ Open the project properties of your project:
     - Project Properties → Configuration Properties → Build Events → Post-Build Event → Command Line
     - Add a new command `xcopy "$(ProjectDir)external\glfw\bin\win64\glfw3.dll" "$(TargetDir)" /Y /I`
 
-Note the use of `\` as path separator.
+Note the use of `\` as path separators.
 
 ### CMake
 
-For CMake, I recommend adding a new target for the library dependency, which has the target library and include path attached.
-Then your existing target uses the new target.
+For CMake, I recommend adding a new target for the dependency, which has the target libraries and include path attached.
+Your existing CMake target will depend on the dependency target.
 
 ```cmake
-# New target for the GLFW library.
+# New target representing GLFW.
 add_library(glfw SHARED IMPORTED)
 target_include_directories(glfw SYSTEM INTERFACE ${PROJECT_SOURCE_DIR}/external/glfw/include)
 set_target_properties(glfw PROPERTIES
@@ -193,7 +193,7 @@ set_target_properties(glfw PROPERTIES
 # Existing target of the project.
 add_executable(example main.cpp) 
 
-# Adding the dependency; this also adds the include path needed.
+# Adding the dependency; this also adds GLFW's include path to example.
 target_link_libraries(example PRIVATE glfw)
 
 # Add a post build step to copy DLL dependencies to the target output directory.
@@ -201,17 +201,18 @@ add_custom_command(TARGET example POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:example> $<TARGET_FILE_DIR:example>
     COMMAND_EXPAND_LISTS)
 
-# Set example target as Visual Studio startup project (optional).
+# Set example target as Visual Studio startup project. (optional)
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT example)
 ```
 
-If there are multiple libraries, first create a target for each one, then create one overall target for the dependency, which pulls in all library targets.
+If there are multiple libraries, create a target for each one first, then create one overall target for the dependency, which depends on all library targets.
+This way your project target can pull in all libraries of the dependency by depending on one target only.
 
 ### GCC / Clang
 
 If you are invoking GCC or Clang manually:
-- specify the include directory with the `-I` flag
-- add the path to the library **after** the source files as regular argument.
+- Specify the include directory with the `-I` flag.
+- Add the path to the library **after** the source files as regular argument.
 
 ```
 $ gcc -Iexternal/glfw/include -o main main.cpp external/bin/linux/libglfw.so
@@ -219,30 +220,31 @@ $ gcc -Iexternal/glfw/include -o main main.cpp external/bin/linux/libglfw.so
 
 ### Other Options
 
-There exist a multitude of options for adding dependencies to a C/C++ project.
-If you are on Linux, consider using your system package manager to install the development package of the library you need.
-The header files and library are typically installed in the global search path and can be found by using CMake's [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) feature.
+There exists a multitude of options for adding dependencies to a C/C++ project.
+If you are on Linux, consider using your system package manager to install the development packages of the libraries you need.
+The header files and library are typically installed in the global search path and can be found explicitly by using CMake's [`find_package`](https://cmake.org/cmake/help/latest/command/find_package.html) feature.
 
 ### Basic troubleshooting
 
 - Compiler complains about unknown identifier when calling a function or using a type.
     - Include the corresponding header file which contains the function declaration or type definition.
+    - If the problem still persists, check for circular includes.
 - Compiler complains about header file not being present.
     - Check your include directories!
       Is the path correct?!
 - Compiler complains about unresolved symbol.
     - The linker is not picking up the library correctly.
-      Check the path to your library.
+      Check the paths to your libraries.
 - Compiler complains about duplicated symbols.
-    - One of your translation units contains a symbol with the same name (and external linkage) as another object file or library.
+    - One of your source files contains a symbol with the same name (and external linkage) as another object file or library.
       Carefully read the error message, it tells you which symbol, and maybe even which object file it comes from.
 - Compilation succeeds, but the executable crashes before getting to `main`.
     - Check that all dynamic libraries are located next to the executable.
-      Double check your post build steps, sometimes the copy command might fail silently.
+      Double check your post build steps.
 
 ## Header-Only Dependencies
 
-Sometimes a dependency consists only of C/C++ header files, without any source or library files.
+Sometimes a dependency consists of C/C++ header files only, without any source or library files.
 In this case, you only have to provide the include directory to use the dependency.
 
 ### `#define IMPLEMENTATION`
