@@ -297,11 +297,28 @@ Look for the `_mt` / `_md` suffix in the library's filename.
 The _dynamic_ runtime might not be present on the target system.
 It is part of [Microsoft Visual C++ Redistributables](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist).
 
+## `WinMain`
+
+Normally, the entry point of your program is the `main` function.
+In Windows, if the _subsystem_ for your executable is set to _Windows_, the entry point will be `WinMain`.
+
+Full signature:
+
+```c++
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+```
+
+**Visual Studio:** Project Properties → Configuration Properties → Linker → System → SubSystem → Windows
+
+**CMake:** Add `WIN32` to [`add_executable`](https://cmake.org/cmake/help/latest/command/add_executable.html).
+
 ## `SDL_main`
 
 Some OS abstraction libraries like [SDL](https://libsdl.org/) want their own entry point so they can set up certain things before your code is run.
 Some documentation for this behavior is available [here](https://github.com/libsdl-org/SDL/blob/main/docs/README-main-functions.md).
 However, I recommend reading the corresponding header file of your OS abstraction library (e.g. `SDL_main.h`).
 
-This mechanism may require an additional library, or preprocessor define to work correctly.
+This mechanism may require linking an additional library (e.g. `SDL2main.lib`), and/or preprocessor define to work correctly.
 Reading the documentation carefully is paramount.
+
+Note that this also takes care of the `main` vs. `WinMain` situation mentioned earlier.
