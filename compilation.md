@@ -1,4 +1,4 @@
-# Compilation
+# Compilation Primer
 
 Compiling C/C++ is a multi-stage process involving multiple different tools.
 Ignoring the build system, these are the main stages when invoking the compiler (e.g. GCC, Clang, MSVC).

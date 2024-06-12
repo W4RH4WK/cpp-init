@@ -20,7 +20,7 @@ Still here? Alright.
 
 - If you need technical information on a language feature or library component, consult [C++ reference](https://cppreference.com/).
 
-- If you are having issues with third-party dependencies, checkout [`compilation.md`](compilation.md).
+- If you are having issues with third-party dependencies, checkout [Compilation Primer](compilation.md).
 
 - Once you are somewhat familiar with C++, read through the [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) and see what makes sense for you.
   This also gives you some idea on how certain language features are supposed to be used.
