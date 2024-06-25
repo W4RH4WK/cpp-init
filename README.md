@@ -74,6 +74,9 @@ When wielding C++, you should understand these topics:
     - When creating a new project, select *Empty Project (C++)*
     - From here, just add a source file and you are good to go
 
+- Do **not** use MSYS2 or any form of MinGW.
+  MinGW setups are a lot more error prone and not suited for beginners.
+
 ### Linux
 
 - Use [Visual Studio Code](https://code.visualstudio.com/)
