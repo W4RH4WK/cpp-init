@@ -12,7 +12,7 @@ The keywords `protected`, `private`, `delete` are good indicators for using `cla
 
 Also, put the `public` part first, then `protected`, then `private`.
 
-## Member function vs. regular function
+## Member Function vs. Regular Function
 
 Often you have the choice of writing a function as a member function or a regular (free-standing) function.
 My rule of thumb is to create a member function whenever it is related **primarily** to **one instance** of the type (e.g. `Vector2::length`)
@@ -25,7 +25,7 @@ A common alternative to my rule of thumb is to focus on the public interface of 
 If some functionality can be implemented by using just the public interface of a type, implement that functionality as a regular function. [[C++ Core Guidelines C.4]](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c4-make-a-function-a-member-only-if-it-needs-direct-access-to-the-representation-of-a-class)
 I dislike this approach as changes to the public interface of a type quickly cascade to functions outside the class.
 
-## Naming conventions
+## Naming Conventions
 
 In C++ we have a bunch of different naming conventions.
 Chances are that you'll be either working on a personal project where it doesn't matter which convention you use, or you'll be working on an existing project where you have to adhere to whatever is already used.
@@ -46,7 +46,7 @@ Certain identifiers are prefixed to make their *impact* easily recognizable in c
 Filenames do not use upper-case letters to avoid issues with Windows being case-insensitive.
 Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html).
 
-## Where to put things
+## Where to put Things
 
 - Minimize variable scope
   - Prefer local variables
@@ -74,7 +74,7 @@ However, marking them `const` as well is technically better.
 
 `const` should not be used when returning values or for non-static member variables (prefer a getter here).
 
-## On code duplication
+## On Code Duplication
 
 The urge to minimize code duplication is often thrown around when people talk about *clean* code.
 Code duplication **can** indeed be a source of bugs, but not every form of code duplication is equally problematic or avoidable.
@@ -95,7 +95,7 @@ I tend to distinguish between 3 different categories:
   Here, one has to inspect the situation thoroughly and weigh whether it'd be better to keep the current architecture and accept code duplication, or to change the architecture allowing the duplication to be removed.
   The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
 
-## On singletons
+## On Singletons
 
 I quite dislike the canonical singleton pattern in C++ where the singleton instance is created lazily on first use (typically from a static local).
 The issue is that this gives you barely any control over the construction and destruction of the instance.
@@ -129,7 +129,7 @@ The most complicated mechanism here is dealing with object construction failure.
 Either make objects always constructible and check validity afterwards (similar to how `std::ifstream` behaves).
 Or construct the object through a static member function — consider returning a `std::unique_ptr` for objects that are not moveable.
 
-## Compile times ain't the issue
+## Compile Times ain't the Issue
 
 Suffering from long compile-times?
 Use pre-compiled headers and avoid unnecessary uses of templates.
@@ -139,7 +139,7 @@ Recompilation, when changing only a single translation unit, is typically under 
 
 I therefore believe that long compile times are not inherent to using C++.
 
-## Build systems suck
+## Build Systems suck
 
 Yes, they do.
 [CMake](https://cmake.org/) sucks, [Premake](https://premake.github.io/) maybe a bit less.
@@ -148,7 +148,7 @@ People don't have any experience with your custom build system and don't know ab
 
 > Better the devil you know than the one you don't.
 
-## Dependency management sucks
+## Dependency Management sucks
 
 To be fair, I do like that not every C++ projects comes with a million third-party dependencies like your typical JavaScript project.
 But granted, given how many basic use-cases are not covered by the standard library, it's hard to go without any third-party library.
@@ -162,8 +162,9 @@ A major downside of this approach is that you have no way to upgrade a dependenc
 For dependencies that are super complicated to build, I build them separately with the original build system and add the build outputs to my project.
 
 I may come back to vcpkg at some point in the future though.
+In the meantime, you can have a look at this example [`build_sdl2.rb`](https://github.com/W4RH4WK/Anker/blob/72851cb06c0027d925ca5ab9d6995459914f4a4a/external/sdl2/build_sdl2.rb) which builds SDL2 and copies the relevant files into my project.
 
-## The standard library sucks
+## The Standard Library sucks
 
 Well, that depends, but yes, some parts are certainly problematic.
 Still, it's a better idea to pick the parts that do work than completely ruling your own.
@@ -192,7 +193,7 @@ So, when you decide for or against using certain language features, don't blindl
 Base your decision on a clear understanding of the benefits and drawbacks.
 If you think you are missing something, ask your peers why, or why not to use the feature and really pressure for a **technical** answer.
 
-## Modules are dead on arrival
+## Modules are Dead on Arrival
 
 C++ modules were standardized with the C++20 standard.
 3 years later, C++ modules are still not usable in general; [many third-party libraries don't provide them](https://arewemodulesyet.org/) and even compiler support is incomplete.
