@@ -154,14 +154,14 @@ To be fair, I do like that not every C++ projects comes with a million third-par
 But granted, given how many basic use-cases are not covered by the standard library, it's hard to go without any third-party library.
 
 While [vcpkg](https://vcpkg.io/) and [Conan](https://conan.io/) are the go-to package managers for C++ nowadays, I've encountered issues with both of them.
-Most specifically it is a hassle to develop a patch for one of your dependencies and have your project use the modified dependency instead of the original version (see [Conan#13743](https://github.com/conan-io/conan/issues/13743#issuecomment-1794414576) for reference).
+Most specifically it is a hassle to develop a patch for one of your dependencies and have your project use the modified dependency instead of the original version. [[Conan#13743]](https://github.com/conan-io/conan/issues/13743) [[vcpkg#16874]](https://github.com/microsoft/vcpkg/issues/16874)
 
 My current approach, as stupid as it sounds, is to include the sources of third-party dependencies along with the project (i.e. vendoring) and compile them along with the project using custom build instructions.
 This works surprisingly well for most dependencies and allows me to define exactly how the dependencies are built.
 A major downside of this approach is that you have no way to upgrade a dependency automatically, rendering this approach impractical for security critical projects.
 For dependencies that are super complicated to build, I build them separately with the original build system and add the build outputs to my project.
 
-I may come back to vcpkg and Conan at some point in the future though.
+I may come back to vcpkg at some point in the future though.
 
 ## The standard library sucks
 
