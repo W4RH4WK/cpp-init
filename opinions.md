@@ -4,27 +4,6 @@
 Take everything here with a grain of salt and feel free to disagree!
 Your milage may vary.
 
-## `struct` vs. `class`
-
-There's hardly any difference whether you use the keyword `struct` or `class` for defining a type.
-My rule of thumb is to use `class` when the type has non-public members, or special copy / move semantics.
-The keywords `protected`, `private`, `delete` are good indicators for using `class`.
-
-Also, put the `public` part first, then `protected`, then `private`.
-
-## Member Function vs. Regular Function
-
-Often you have the choice of writing a function as a member function or a regular (free-standing) function.
-My rule of thumb is to create a member function whenever it is related **primarily** to **one instance** of the type (e.g. `Vector2::length`)
-If the implementation primarily deals with 2 (or more) instances of the same type, I prefer a regular function (e.g. `lerp` for `Vector2`).
-
-Sometimes I opt for a static member function instead of a regular function when having the typename as prefix for the function call increases readability.
-Consider `Vector2::dot` vs. just `dot`.
-
-A common alternative to my rule of thumb is to focus on the public interface of a type.
-If some functionality can be implemented by using just the public interface of a type, implement that functionality as a regular function. [[C++ Core Guidelines C.4]](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c4-make-a-function-a-member-only-if-it-needs-direct-access-to-the-representation-of-a-class)
-I dislike this approach as changes to the public interface of a type quickly cascade to functions outside the class.
-
 ## Naming Conventions
 
 In C++ we have a bunch of different naming conventions.
@@ -74,14 +53,23 @@ However, marking them `const` as well is technically better.
 
 `const` should not be used when returning values or for non-static member variables (prefer a getter here).
 
+## `struct` vs. `class`
+
+There's hardly any difference whether you use the keyword `struct` or `class` for defining a type.
+My rule of thumb is to use `class` when the type has non-public members, or special copy / move semantics.
+The keywords `protected`, `private`, `delete` are good indicators for using `class`.
+
+Also, put the `public` part first, then `protected`, then `private`.
+
 ## On Code Duplication
 
 The urge to minimize code duplication is often thrown around when people talk about *clean* code.
 Code duplication **can** indeed be a source of bugs, but not every form of code duplication is equally problematic or avoidable.
 I tend to distinguish between 3 different categories:
 
-- **Avoidable code duplication:** is code that is typically duplicated because it was easier to copy-paste an already existing code snippet and modify it slightly without putting a little bit of thought into it.
-  This form of code duplication is characterized by you **always** being better off removing the duplication and refactoring the code accordingly.
+- **Avoidable code duplication:** is code that got duplicated primarily because of the author's laziness.
+  Copy-paste was easier than putting a little more thought into it.
+  This form of code duplication is characterized by you **always** being better off refactoring the code, removing the duplication.
 
 - **Unavoidable code duplication:** is a form of code duplication (or boilerplate code) that we cannot avoid because of technical reasons.
   This commonly happens when our programming language or framework is missing some crucial feature (e.g. reflection).
@@ -91,17 +79,30 @@ I tend to distinguish between 3 different categories:
   Note: when code duplication is unavoidable, you can still make an effort to minimize the actual number of lines needed for each duplication.
   I'd rather duplicate a single function call than a 30-line block at each location.
 
-- **Critical code duplication:** is code that is duplicated because the current architecture doesn't allow or support a from where less duplication is possible.
+- **Critical code duplication:** is code that is duplicated because the current architecture doesn't allow or support a form where less duplication is possible.
   Here, one has to inspect the situation thoroughly and weigh whether it'd be better to keep the current architecture and accept code duplication, or to change the architecture allowing the duplication to be removed.
   The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
+
+## Member Function vs. Regular Function
+
+Often you have the choice of writing a function as a member function or a regular (free-standing) function.
+My rule of thumb is to create a member function whenever it is related **primarily** to **one instance** of the type (e.g. `Vector2::length`)
+If the implementation primarily deals with 2 (or more) instances of the same type, I prefer a regular function (e.g. `lerp` for `Vector2`).
+
+Sometimes I opt for a static member function instead of a regular function when having the typename as prefix for the function call increases readability.
+Consider `Vector2::dot` vs. just `dot`.
+
+A common alternative to my rule of thumb is to focus on the public interface of a type.
+If some functionality can be implemented by using just the public interface of a type, implement that functionality as a regular function. [[C++ Core Guidelines C.4]](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c4-make-a-function-a-member-only-if-it-needs-direct-access-to-the-representation-of-a-class)
+I dislike this approach as changes to the public interface of a type quickly cascade to functions outside the class.
 
 ## On Singletons
 
 I quite dislike the canonical singleton pattern in C++ where the singleton instance is created lazily on first use (typically from a static local).
 The issue is that this gives you barely any control over the construction and destruction of the instance.
-Instead, I prefer to make the singleton instance accessible directly — either by exposing it as a global variable, or by providing dedicated `initialize` / `finalize` functions.
+Instead, I prefer to make the singleton instance accessible directly by exposing it as a global variable.
 
-However, I also think that the singleton pattern is overused in general and that the common requirements are actually orthogonal:
+However, I also think that the singleton pattern is overused in general and that the common requirements are orthogonal:
 
 - It doesn't make sense to have multiple instances of this class; vs.
 - We need a way to access this component from multiple locations across the code-base
@@ -116,18 +117,35 @@ Thread-safety is generally not an issue here since all such components should be
 
 Some guides on modern C++ recommend the use of exceptions for (exceptional) error handling.
 Exceptions have always been a problematic topic for me — to the point where I'd rather avoid them all together.
-The primary problem for me is that a function's signature does not communicate whether and which exceptions can be thrown by the function.
+The primary problem is that a function's signature does not communicate whether and which exceptions can be thrown by the function.
 I'd effectively have to employ catch-all cases to reliably handle errors.
-Furthermore, the compiler won't issue warnings in case I forget to handle a failure case appropriately — an exception will just be passed up the call stack commonly leading to a crash.
+Furthermore, the compiler won't issue warnings in case I forget to handle a failure case appropriately — an uncaught exception will just be passed up the call stack commonly leading to a crash. 
 
 Since exceptions are designed for *exceptional* circumstances, we need a different mechanism for *regular* error handling anyway.
-And for this, I use the function's return value, typically with a dedicated error type that is also marked `[[nodiscard]]`.
-Whether the error type is a result type like `std::expected` or just an error enum depends on the project — I haven't settled on what's more ergonomic to use yet.
-(In the case of an error enum, outputs are realized using output-parameters.)
+At this point, I prefer to communicate all errors through the same mechanism, be it a *regular* error or an *exceptional* error.
 
-The most complicated mechanism here is dealing with object construction failure.
-Either make objects always constructible and check validity afterwards (similar to how `std::ifstream` behaves).
-Or construct the object through a static member function — consider returning a `std::unique_ptr` for objects that are not moveable.
+My preferred variant here is to use a function's return value. Preferably with a custom error type marked `[[nodiscard]]`.
+Output parameter(s) are used for the *regular* function output.
+
+So far, I've not been convinced by *result types* like `std::expected` or `absl::StatusOr`.
+Their API doesn't feel ergonomic enough, at the moment, to justify adoption, where any half-decent C programmer understands error codes and output parameters.
+
+The one issue with error code + output parameter is how to handle object construction failure.
+All of the typical solutions come with some drawback; use the one that fits the situation the best:
+
+- Static factory function that returns the error code and initializes a *null-able* type (e.g. `std::optional`, `std::unique_ptr`) on success via output parameter.
+
+- Static factory function that returns an object as *null-able* type.
+  Error code is provided via (optional) output parameter.
+
+- Static factory function that returns a result type (e.g. `std::expected`).
+
+- Object is default-constructable, but has an `initialize` member function function which returns an error code.
+
+- Object is always constructed successfully, but can be in an *invalid* state (e.g. `std::ifstream`).
+
+I'd like to point out that, even with the use of exceptions, an object may remain alive, but in an invalid state.
+Ideally, an object's implementation should detect being in an invalid state and continue to behave in a well-defined manner.
 
 ## Compile Times ain't the Issue
 
