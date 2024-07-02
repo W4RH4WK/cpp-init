@@ -232,6 +232,11 @@ The header files and library are typically installed in the global search path a
 - Compiler complains about header file not being present.
     - Check your include directories!
       Is the path correct?!
+    - If you are using _relative_ paths, make sure that the _base_ path is what you expect it to be.
+      Depending on your build system / setup, relative paths may not be relative to the current working directory.
+    - Double check that the combination of include path and `#include` directive build a valid path.
+      E.g. if the include path is `external/glfw/include`, you do `#include <GLFW/glfw3.h>`;
+      but if the include path is `external/glfw/include/GLFW`, you do `#include <glfw3.h>`.
 - Compiler complains about unresolved symbol.
     - The linker is not picking up the library correctly.
       Check the paths to your libraries.
