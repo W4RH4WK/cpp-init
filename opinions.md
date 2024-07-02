@@ -113,39 +113,9 @@ The platform abstraction is realized as a singleton with dedicated setup and tea
 
 Thread-safety is generally not an issue here since all such components should be set up at program start, by the main thread, in a well defined order.
 
-## About Exceptions
+## On Exceptions
 
-Some guides on modern C++ recommend the use of exceptions for (exceptional) error handling.
-Exceptions have always been a problematic topic for me — to the point where I'd rather avoid them all together.
-The primary problem is that a function's signature does not communicate whether and which exceptions can be thrown by the function.
-I'd effectively have to employ catch-all cases to reliably handle errors.
-Furthermore, the compiler won't issue warnings in case I forget to handle a failure case appropriately — an uncaught exception will just be passed up the call stack commonly leading to a crash. 
-
-Since exceptions are designed for *exceptional* circumstances, we need a different mechanism for *regular* error handling anyway.
-At this point, I prefer to communicate all errors through the same mechanism, be it a *regular* error or an *exceptional* error.
-
-My preferred variant here is to use a function's return value. Preferably with a custom error type marked `[[nodiscard]]`.
-Output parameter(s) are used for the *regular* function output.
-
-So far, I've not been convinced by *result types* like `std::expected` or `absl::StatusOr`.
-Their API doesn't feel ergonomic enough, at the moment, to justify adoption, where any half-decent C programmer understands error codes and output parameters.
-
-The one issue with error code + output parameter is how to handle object construction failure.
-All of the typical solutions come with some drawback; use the one that fits the situation the best:
-
-- Static factory function that returns the error code and initializes a *null-able* type (e.g. `std::optional`, `std::unique_ptr`) on success via output parameter.
-
-- Static factory function that returns an object as *null-able* type.
-  Error code is provided via (optional) output parameter.
-
-- Static factory function that returns a result type (e.g. `std::expected`).
-
-- Object is default-constructable, but has an `initialize` member function function which returns an error code.
-
-- Object is always constructed successfully, but can be in an *invalid* state (e.g. `std::ifstream`).
-
-I'd like to point out that, even with the use of exceptions, an object may remain alive, but in an invalid state.
-Ideally, an object's implementation should detect being in an invalid state and continue to behave in a well-defined manner.
+Check out [Error Handling](error_handling.md) for my rambling about exceptions.
 
 ## Compile Times ain't the Issue
 
