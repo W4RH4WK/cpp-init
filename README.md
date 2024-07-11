@@ -13,7 +13,7 @@ Still here? Alright.
 ## Where do I start?
 
 - First, get familiar with C.
-  For this I recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/).
+  For this I recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/) and [Modern C](https://gustedt.gitlabpages.inria.fr/modern-c/).
 
 - Once you are somewhat fluent with C, you may move on to C++.
   [Learn C++](https://www.learncpp.com/) is an excellent guide that has you covered.
