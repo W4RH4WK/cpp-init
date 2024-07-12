@@ -114,9 +114,11 @@ Some people may even opt for abstracting this behind a macro.
 
 ```c++
 #define TRY(expr) \
-    if (auto status = (expr); !status) [[unlikely]] { \
-        return status; \
-    }
+    do { \
+        if (auto status = (expr); !status) [[unlikely]] { \
+            return status; \
+        } \
+    while (0)
 
 Status AudioTrack::load(std::string_view identifier)
 {
@@ -238,7 +240,7 @@ This can be mimicked with in C++ with a macro, but a temporary is left in the sc
     if (!result_temporary) { \
         return std::unexpected(result_temporary.error()); \
     } \
-    assignment = std::exchange(result, std::unexpected(EmptyResult)).value();
+    assignment = std::exchange(result, std::unexpected(EmptyResult)).value()
 
 std::expected<void, ErrorCode> AudioTrack::load(std::string_view identifier)
 {
@@ -300,10 +302,12 @@ I use this approach in some command-line utilities to get stack traces on errors
 
 ```c++
 #define TRY(expr) \
-    if (auto status = (expr); !status) [[unlikely]] { \
-        ERROR("%s failed with %s", #expr, status.toString()); \
-        return status; \
-    }
+    do { \
+        if (auto status = (expr); !status) [[unlikely]] { \
+            ERROR("%s failed with %s", #expr, status.toString()); \
+            return status; \
+        } \
+    while (0)
 
 Status AudioTrack::load(std::string_view identifier)
 {
@@ -398,8 +402,8 @@ The second parameter is the return value, which is omitted if the return-type is
     do { \
         if (!(condition)) [[unlikely]] { \
             ERROR("%s", "Check failed: " #condition); \
-            if (::g_checkHandler) { \
-                ::g_checkHandler(); \
+            if (auto* handler = ::g_checkHandler.load()) { \
+                handler(); \
             } \
             return; \
         } \
@@ -409,17 +413,15 @@ The second parameter is the return value, which is omitted if the return-type is
     do { \
         if (!(condition)) [[unlikely]] { \
             ERROR("%s", "Check failed: " #condition); \
-            if (::g_checkHandler) { \
-                ::g_checkHandler(); \
+            if (auto* handler = ::g_checkHandler.load()) { \
+                handler(); \
             } \
             return ret; \
         } \
     } while (0)
 
-std::function<void(void)> g_checkHandler;
+std::atomic<void(*)()> g_checkHandler;
 ```
-
-Note that `g_checkHandler` needs a mutex if used in multi-threaded environments.
 
 Example usage:
 
