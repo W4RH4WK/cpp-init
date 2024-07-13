@@ -5,7 +5,7 @@ Since I encounter this question a lot lately, here's a summary of my typical ans
 ## Should I learn C++?
 
 Depends on what your goal is.
-C++ is certainly not dead, but better alternatives may exist, depending on your use-case.
+C++ is certainly not dead, but better alternatives may exist, depending on your use case.
 Consider [Go](https://go.dev/) and [Rust](https://www.rust-lang.org/) before deciding to venture forth into C++.
 
 Still here? Alright.
@@ -13,12 +13,13 @@ Still here? Alright.
 ## Where do I start?
 
 - First, get familiar with C.
-  For this I recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/) and [Modern C](https://gustedt.gitlabpages.inria.fr/modern-c/).
+  For this I recommend [Beej's Guide to C Programming](https://beej.us/guide/bgc/).
+  Alternatively, [Modern C](https://gustedt.gitlabpages.inria.fr/modern-c/) is also a good option.
 
 - Once you are somewhat fluent with C, you may move on to C++.
   [Learn C++](https://www.learncpp.com/) is an excellent guide that has you covered.
 
-- If you need technical information on a language feature or library component, consult [C++ reference](https://cppreference.com/).
+- If you need technical information on a language feature or standard library component, consult [C++ reference](https://cppreference.com/).
 
 - If you are having issues with third-party dependencies, checkout [Compilation Primer](compilation.md).
 
@@ -27,14 +28,15 @@ Still here? Alright.
   You may also be interested in [my personal opinions](opinions.md).
 
 - Pick up [Git](https://git-scm.com/) along the way.
-  Strictly speaking, Git is not necessary for C++, yet any modern programmer should be familiar with Git and use it in their projects.
+  Strictly speaking, Git is not necessary for C++, yet any modern programmer should be familiar with Git.
 
 - Pick up a scripting language like [Python](https://www.python.org/) or [Ruby](https://www.ruby-lang.org/) at some point as well.
-  Certain tasks are better suited for a scripting language, knowing at least one will increase your productivity immensely.
+  Certain tasks are better suited for a scripting language, knowing at least one will increase your productivity tremendously.
   Oh, and stay away from JavaScript!
 
 The most important aspect is that you get your hands dirty and start building things early on.
 Theory is important, but practice is still paramount!
+Don't get stuck in Tutorial Hell.
 
 ## Which Topics are Essential?
 
@@ -45,15 +47,15 @@ When wielding C++, you should understand these topics:
     - Value vs. reference/pointer
     - Constructor/destructor
     - Copy/move semantics
-    - [Rule of five / zero](https://en.cppreference.com/w/cpp/language/rule_of_three)
+    - [Rule of five/zero](https://en.cppreference.com/w/cpp/language/rule_of_three)
 - `const`-correctness
 - Ownership & lifetime
-    - Scope-based resource management (i.e. RAII)
-- Dynamic memory:
-    - Avoid `new` / `delete`
+    - RAII (i.e. scope-based resource management)
+- Dynamic memory
+    - Avoid `new`/`delete`
     - Prefer `std::unique_ptr` to `std::shared_ptr`
     - Pick the right container (see sequential vs. associative container)
-- Common bugs:
+- Common bugs
     - Use of uninitialized variables
     - Use-after-free
     - Iterator invalidation
@@ -105,10 +107,10 @@ When wielding C++, you should understand these topics:
 
 ### In the Browser
 
-[Compiler Explorer](https://godbolt.org/) allows you write, compile, and run small C++ programs.
+[Compiler Explorer](https://godbolt.org/) allows you to write, compile, and run small C++ programs.
 You can even use third-party libraries.
 
-Whenever you have a problem or question, create a small example of your issue in Compiler Explorer and provide a short link (top-right *Share*) to it along with your question.
+Whenever you have a problem or question, create a small example in Compiler Explorer and provide a short link (top-right *Share*) to it along with your question.
 
 ## Should I use a Build System?
 
@@ -118,37 +120,38 @@ A build system organizes and documents the build process and allows other tools,
 My personal preference is [CMake](https://cmake.org/), but [Premake](https://premake.github.io/) is also a pretty common choice.
 There is a more advanced example available in [`example2`](example2/), featuring multiple CMake targets, tests, benchmarks, and dependencies.
 
-## Where can I find exercises for beginners?
+## Where can I find Exercises for Beginners?
 
 For this, I recommend [Advent of Code](https://adventofcode.com/events).
 It's an annual advent calendar where you find a programming exercises behind each day.
 The exercise is not specific to any programming language.
-You can pick exercises from previous years and look up solutions on GitHub if you get stuck.
+You can pick exercises from past years and look up solutions on GitHub if you get stuck.
 
-## Should I use AI assisted tooling?
+## Should I use AI Assisted Tooling?
 
 Of course you can have conversations with ChatGPT (or similar) about C++ related topics, just always be critical of the answers you get.
 However, AI assisted tooling should **not** be a part of your workflow at this point.
+Under no circumstances should AI be used to generate code for you.
 
-## Trouble Shooting
+## Troubleshooting
 
-- Try to solve the issue yourself first.
+- Try to solve the issue by yourself first.
   Use search engines and message boards in combination with logical thinking.
   Only after spending some time on the problem, you are pardoned to ask for help.
 
 - Provide detailed information:
-  1. State what exactly you are trying to achieve.
-     A clear definition is important to rule out an [XY problem](https://en.wikipedia.org/wiki/XY_problem).
-  2. State what you have done so far and describe your current state.
-  3. Describe exactly which operation is causing you trouble.
-     Provide information on what you are doing (e.g. which command you are running), what the error is (e.g. console output of the program), and what outcome you'd expect.
-     Provide the **full** console output, not just the line you think contains the error.
-  4. Shortly state which other approaches you have already tried.
-  5. Add auxiliary information that you deem important, like which operating system and software versions you are using.
+    1. State what exactly you are trying to achieve.
+       A clear definition is important to rule out an [XY problem](https://en.wikipedia.org/wiki/XY_problem).
+    2. State what you have done so far and describe your current situation.
+    3. Describe exactly which operation is causing you trouble.
+       Provide information on what you are doing (e.g. which command you are running), what the error is (e.g. console output of the program), and what outcome you'd expect.
+       Provide the **full** console output, not just the line you think contains the error.
+    4. Shortly state which other approaches you have already tried.
+    5. Add auxiliary information that you deem important, like which operating system and software versions you are using.
 
 If you are dealing with a C/C++ related issue:
 - Enable and fix warnings in your code (`-Wall -Wextra` at least on GCC / Clang)
-- Build and run your application with address sanitizer enabled
+- Build and run your application with address sanitizer enabled (`-fsanitize=address` on GCC / Clang)
 - Put together a minimum (not) working example — preferably on [Compiler Explorer](https://godbolt.org/)
 
 If you are having issues with an interactive application that requires various third-party dependencies:
