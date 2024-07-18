@@ -79,6 +79,9 @@ When wielding C++, you should understand these topics:
 - Do **not** use MSYS2 or any form of MinGW.
   MinGW setups are a lot more error prone and not suited for beginners.
 
+- If you want to use Visual Studio with CMake (see below), always generate a Solution.
+  Do not use File → Open → CMake... in Visual Studio as this mechanism is completely different from opening a CMake generated Solution, and much more error prone.
+
 ### Linux
 
 - Use [Visual Studio Code](https://code.visualstudio.com/)
