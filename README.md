@@ -156,9 +156,12 @@ If you are dealing with a C/C++ related issue:
 - Enable and fix warnings in your code (`-Wall -Wextra` at least on GCC / Clang)
 - Build and run your application with address sanitizer enabled (`-fsanitize=address` on GCC / Clang)
 - Put together a minimum (not) working example — preferably on [Compiler Explorer](https://godbolt.org/)
+- Read through all of [Compilation Primer](compilation.md) if your issue is related to `#include`, or the compiler complaining about duplicate or unresolved symbols
+- If you get seemingly strange compilation errors, verify that there are no [include cycles](https://stackoverflow.com/questions/625799)
 
 If you are having issues with an interactive application that requires various third-party dependencies:
 - Put together a minimum (not) working example
 - Make sure everything can be built out-of-the-box with either CMake, Premake, or a Visual Studio solution
+- Do not include generated files, like build artifacts
 - Put this example somewhere for other people to download, preferably on GitHub
 - People often don't have the time to go through a manual setup process involving multiple complicated steps just to help you out
