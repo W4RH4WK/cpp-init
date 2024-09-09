@@ -17,7 +17,9 @@ Still here? Alright.
   Alternatively, [Modern C](https://gustedt.gitlabpages.inria.fr/modern-c/) is also a good option.
 
 - Once you are somewhat fluent with C, you may move on to C++.
-  [Learn C++](https://www.learncpp.com/) is an excellent guide that has you covered.
+  Or just stick with C; it's sufficient for many people and projects.
+  Alright.
+  [Learn C++](https://www.learncpp.com/) is an excellent guide for getting into C++.
 
 - If you need technical information on a language feature or standard library component, consult [C++ reference](https://cppreference.com/).
 
