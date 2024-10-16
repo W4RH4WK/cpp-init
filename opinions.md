@@ -22,7 +22,13 @@ Certain identifiers are prefixed to make their *impact* easily recognizable in c
 - Prefix static member variables with `sm_`
 - Prefix interface types with `I` (e.g. `IAudioServer`)
 
-Filenames do not use upper-case letters to avoid issues with Windows being case-insensitive.
+For filenames:
+- Use lowercase letters with underscores
+- Add a project specific prefix
+- Use `.hpp` and `.cpp` for C++ code
+- Use `.h` and `.c` for C code
+- Example: `anker_config_manager.hpp`
+
 Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1204r0.html).
 
 ## Where to put Things
@@ -99,7 +105,7 @@ I dislike this approach as changes to the public interface of a type quickly cas
 ## On Singletons
 
 I quite dislike the canonical singleton pattern in C++ where the singleton instance is created lazily on first use (typically from a static local).
-The issue is that this gives you barely any control over the construction and destruction of the instance.
+The issue is that this gives you barely any control over the construction and destruction of the instance and its members.
 Instead, I prefer to make the singleton instance accessible directly by exposing it as a global variable.
 
 However, I also think that the singleton pattern is overused in general and that the common requirements are orthogonal:
@@ -154,7 +160,7 @@ In the meantime, you can have a look at this example [`build_sdl2.rb`](https://g
 
 ## The Standard Library sucks
 
-Well, that depends, but yes, some parts are certainly problematic.
+Well, that depends, but yes, many parts are certainly problematic.
 Still, it's a better idea to pick the parts that do work than completely ruling your own.
 Like with build systems, most C++ programmers are aware of the standard library's features and shortcomings.
 And chances are pretty high that your custom re-implementation will have similar, or even worse, shortcomings thanks to C++ being such a complex language.
@@ -165,7 +171,7 @@ So, unless you have a *really* good point not to use the standard library, just 
 
 People often throw around the term C-Style C++ or [Orthodox C++](https://gist.github.com/bkaradzic/2e39896bc7d8c34e042b) when talking about which language features to use or to avoid.
 To me, these discussions often seem like a straw man argument that come from a lack of understanding.
-Sure, there are lots of issues with C++, but many features can improve code quality.
+Sure, there are lots of issues with C++, but some features can improve code quality.
 
 For instance, I often hear people recommending `printf` over `std::cout` because it's *more natural* or more similar to other language's printing mechanism.
 What's often missing from this discussion is `printf`'s lack of type-safety; `printf` completely trusts the format string you provide and expects arguments to match up with the format specifiers (e.g. `%s`).
@@ -173,9 +179,8 @@ Accidentally mixing up the argument list often results in undefined behavior, cr
 With `std::cout` this mistake cannot happen; the compiler enforces that every type you feed into `std::cout` is printable, otherwise you get an error **at compile-time**.
 
 Similar problems arise when using `malloc` / `free` over smart pointers.
-Yes, smart pointers are not a silver bullet; you can still break your program with them.
-But it's typically harder to do so for the average C++ programmer, compared to doing manual memory management.
-Rust adopting the concept of RAII is a good indicator that it's worth wrapping your head around.
+Yes, smart pointers are not a silver bullet; they can still result in leaks and can degrade performance in certain situations, like releasing a chain of smart pointers.
+However, the average C++ programmer causes more issues doing manual memory management; so you are likely better off using smart pointers.
 
 So, when you decide for or against using certain language features, don't blindly accept someone else's recommendation.
 Base your decision on a clear understanding of the benefits and drawbacks.
