@@ -11,7 +11,7 @@ Chances are that you'll be either working on a personal project where it doesn't
 Anyway, here are my personal preferences in case you are interested:
 
 - Use *camel-case* as default (e.g. `configFile`, `loadConfig`)
-- Capitalize constants, enum members, types, type parameters, concepts, and namespaces (e.g. `ConfigManager`, `ConfigPath`)
+- Capitalize non-local constants, enum members, types, type parameters, concepts, and namespaces (e.g. `ConfigManager`, `ConfigPath`)
 - Use *all-caps* for defines / macros along with a project specific prefix (e.g. `ANKER_DEBUG_BREAK`)
 - Function names should start with a verb as they *do* something (e.g. `loadConfig`)
 - Add adjectives to variables to convey additional information (e.g. `activeUser` instead of `user`)
@@ -35,8 +35,8 @@ Consider [Canonical Project Structure](https://www.open-std.org/jtc1/sc22/wg21/d
 
 - Minimize variable scope
   - Prefer local variables
-  - Prefer static locals to global variables
-  - Hide global variables inside source files if possible
+  - Think critically about _hiding_ state (global / static variables) inside source files.
+    Global, mutable state should be visible and explicit rather hidden.
 - Parameters
   - Take primitives by value
   - Take structs and classes by `const&`
@@ -81,13 +81,14 @@ I tend to distinguish between 3 different categories:
   This commonly happens when our programming language or framework is missing some crucial feature (e.g. reflection).
   While ways to work around these limitations may exist, they often create more problems and are commonly not worth the additional complexity.
   Here, the tradeoff is in favor of keeping the code duplication over introducing a new, intrusive mechanism that mitigates the duplication.
-  
+
   Note: when code duplication is unavoidable, you can still make an effort to minimize the actual number of lines needed for each duplication.
   I'd rather duplicate a single function call than a 30-line block at each location.
 
 - **Critical code duplication:** is code that is duplicated because the current architecture doesn't allow or support a form where less duplication is possible.
   Here, one has to inspect the situation thoroughly and weigh whether it'd be better to keep the current architecture and accept code duplication, or to change the architecture allowing the duplication to be removed.
-  The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
+
+The bottom line is: code duplication is bad, but picking the wrong abstraction is far worse.
 
 ## Member Function vs. Regular Function
 
@@ -100,18 +101,17 @@ Consider `Vector2::dot` vs. just `dot`.
 
 A common alternative to my rule of thumb is to focus on the public interface of a type.
 If some functionality can be implemented by using just the public interface of a type, implement that functionality as a regular function. [[C++ Core Guidelines C.4]](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c4-make-a-function-a-member-only-if-it-needs-direct-access-to-the-representation-of-a-class)
-I dislike this approach as changes to the public interface of a type quickly cascade to functions outside the class.
 
 ## On Singletons
 
-I quite dislike the canonical singleton pattern in C++ where the singleton instance is created lazily on first use (typically from a static local).
+I dislike the canonical singleton pattern in C++ where the singleton instance is created lazily on first use (typically from a static local).
 The issue is that this gives you barely any control over the construction and destruction of the instance and its members.
 Instead, I prefer to make the singleton instance accessible directly by exposing it as a global variable.
 
 However, I also think that the singleton pattern is overused in general and that the common requirements are orthogonal:
 
-- It doesn't make sense to have multiple instances of this class; vs.
-- We need a way to access this component from multiple locations across the code-base
+- it doesn't make sense to have multiple instances of this class; vs.
+- we need a way to access this component from multiple locations across the code-base.
 
 In [`example2`](example2/) you can find a logger and platform abstraction mechanism.
 The logger mechanism is not a singleton, there's just a default instance.
@@ -185,6 +185,8 @@ However, the average C++ programmer causes more issues doing manual memory manag
 So, when you decide for or against using certain language features, don't blindly accept someone else's recommendation.
 Base your decision on a clear understanding of the benefits and drawbacks.
 If you think you are missing something, ask your peers why, or why not to use the feature and really pressure for a **technical** answer.
+
+That said, I believe that object oriented programming is overhyped and commonly leads to more problems than it solves.
 
 ## Modules are Dead on Arrival
 
