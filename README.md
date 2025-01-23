@@ -101,7 +101,7 @@ When wielding C++, you should understand these topics:
       sudo apt install cmake
       ```
 
-- Inspect the provided [example](example/) project
+- Inspect the provided [example1](example1/) project
 
 - To build and run, issue the following commands in the example folder:
     ```
@@ -124,6 +124,7 @@ A build system organizes and documents the build process and allows other tools,
 
 My personal preference is [CMake](https://cmake.org/), but [Premake](https://premake.github.io/) is also a pretty common choice.
 There is a more advanced example available in [`example2`](example2/), featuring multiple CMake targets, tests, benchmarks, and dependencies.
+Note that this example follows an over-engineered OOP style for illustration purposes.
 
 ## Where can I find Exercises for Beginners?
 

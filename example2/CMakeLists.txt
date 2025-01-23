@@ -17,8 +17,7 @@ function(example_compile_options target)
 		CXX_EXTENSIONS OFF)
 
 	target_compile_options(${target} PRIVATE
-		$<$<CXX_COMPILER_ID:MSVC>:/MP /W4 /external:W0 /bigobj /utf-8>
-		$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/Oi>
+		$<$<CXX_COMPILER_ID:MSVC>:/MP /W4 /external:W0 /utf-8>
 		$<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra -Wpedantic -Wtype-limits -Wconversion -Wsign-conversion -Wdouble-promotion -Wundef -g>
 
 		# Enable MSVC debug symbols and edit-and-continue support
@@ -32,7 +31,7 @@ function(example_compile_options target)
 	get_target_property(target_type ${target} TYPE)
 	if(target_type STREQUAL EXECUTABLE)
 		target_link_options(${target} PRIVATE
-			$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/OPT:REF /OPT:ICF /DEBUG>)
+			$<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/DEBUG>)
 		set_target_properties(${target} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 	endif()
 
