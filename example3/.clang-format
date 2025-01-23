@@ -1,0 +1,28 @@
+---
+BasedOnStyle: LLVM
+ColumnLimit: 120
+IndentWidth: 4
+TabWidth: 4
+UseTab: ForIndentation
+BreakBeforeBraces: Stroustrup
+PointerAlignment: Left
+Standard: c++20
+
+# Pull backslashes to the left due to increased column limit.
+AlignEscapedNewlines: DontAlign
+
+# Compress simple statements
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+
+# Improve alignment of multi-line expressions.
+AlignOperands: AlignAfterOperator
+BreakBeforeBinaryOperators: NonAssignment
+PenaltyBreakAssignment: 25
+
+# Increase readability of templates.
+AlwaysBreakTemplateDeclarations: true
+
+# Increase readability of large constructor initializers.
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+...

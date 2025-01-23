@@ -125,6 +125,7 @@ A build system organizes and documents the build process and allows other tools,
 My personal preference is [CMake](https://cmake.org/), but [Premake](https://premake.github.io/) is also a pretty common choice.
 There is a more advanced example available in [`example2`](example2/), featuring multiple CMake targets, tests, benchmarks, and dependencies.
 Note that this example follows an over-engineered OOP style for illustration purposes.
+Compare this with [`example3`](example3/) for a different, less OOP-heavy implementation.
 
 ## Where can I find Exercises for Beginners?
 
