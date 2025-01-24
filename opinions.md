@@ -101,6 +101,9 @@ Look into other paradigms, like the mentioned functional programming and data or
 I suspect the best mix is state organized in a data oriented manner, with operations (i.e. functions, ideally pure) doing the bulk of your program's work, where each function is implemented in a **procedural style**.
 Objects (state with functions attached) should be reserved for utilities, which clearly communicate their invariants, but don't hide them completely, e.g. by suffixing members with an `_` instead of making them private.
 
+In general, you should go for simpler code that does just what needs to be done, written in *code* rather than through *gluing objects together*.
+Compare [`example2`](example2/) to [`example3`](example3/) for an illustration.
+
 ## Code Duplication
 
 The urge to minimize code duplication is often thrown around when people talk about *clean code*.
