@@ -140,6 +140,8 @@ Of course you can have conversations with ChatGPT (or similar) about C++ related
 However, AI assisted tooling should **not** be a part of your workflow at this point.
 Under no circumstances should AI be used to generate code for you.
 
+You may want to read [*AI is Creating a Generation of Illiterate Programmers*](https://nmn.gl/blog/ai-illiterate-programmers).
+
 ## Troubleshooting
 
 - Try to solve the issue by yourself first.
