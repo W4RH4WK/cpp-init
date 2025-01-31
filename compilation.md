@@ -154,7 +154,7 @@ Note the `README.md` provides more insight into the different libraries.
 - Pick the corresponding libraries and extract them as well
 
       glfw-3.4.bin.WIN64/lib-vc2022/glfw3.dll → PROJECT_ROOT/external/glfw/bin/win64/glfw3.dll
-      glfw-3.4.bin.WIN64/lib-vc2022/glfw3dll.lib → PROJECT_ROOT/external/glfw/bin/win64/glfw3lib.dll
+      glfw-3.4.bin.WIN64/lib-vc2022/glfw3dll.lib → PROJECT_ROOT/external/glfw/bin/win64/glfw3dll.lib
 
 ### Visual Studio
 
