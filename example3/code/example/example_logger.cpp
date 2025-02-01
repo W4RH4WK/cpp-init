@@ -2,9 +2,9 @@
 
 namespace Example {
 
-// Note that this callback is not initialized. We want the application to decide
+// Note that this callback is zero-initialized. We want the application to decide
 // where log messages go rather than spitting out noise to stdout.
-void (*onLog)(std::string_view message, std::string_view file, long line);
+OnLog onLog;
 
 void logToStdout(std::string_view message, std::string_view file, long line)
 {
