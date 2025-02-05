@@ -31,6 +31,7 @@ Still here? Alright.
 
 - Pick up [Git](https://git-scm.com/) along the way.
   Strictly speaking, Git is not necessary for C++, yet any modern programmer should be familiar with Git.
+  Consider [Beej's Guide to Git](https://beej.us/guide/bggit/).
 
 - Pick up a scripting language like [Python](https://www.python.org/) or [Ruby](https://www.ruby-lang.org/) at some point as well.
   Certain tasks are better suited for a scripting language, knowing at least one will increase your productivity tremendously.
