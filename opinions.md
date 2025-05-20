@@ -225,9 +225,12 @@ So, unless you have a *really* good point not to use the standard library, of wh
 
 ## What about C-style C++?
 
-People often throw around the term C-Style C++ or [Orthodox C++](https://gist.github.com/bkaradzic/2e39896bc7d8c34e042b) when talking about which language features to use or to avoid.
-To make these decisions, you should really understand what a language or standard library feature brings to the table, and why it is considered bad.
-Otherwise, just stick to C, don't put up with C++.
+Generally, you should only use the parts of a language you have a good understanding of -- ideally, only the parts you could implement yourself.
+For C++, you should have a good understanding of a feature's benefits and drawbacks.
+If you don't want to put up with that, just stick to C.
+
+People often throw around the term C-Style C++ or [Orthodox C++](https://gist.github.com/bkaradzic/2e39896bc7d8c34e042b) when talking about which language or standard library features to use or avoid.
+Yet, they often neglect a meaningful justification or do not present the actual trade-off adequately.
 
 As an example, some people recommend `printf` over `std::cout` because it's *more natural* or more similar to other language's printing mechanism.
 And while C++ streams' API sucks, what's overlooked is `printf`'s lack of type-safety; `printf` completely trusts the format string you provide and expects arguments to match up with the format specifiers (e.g. `%s`).
@@ -239,13 +242,10 @@ Yes, smart pointers are not a silver bullet; they can still result in leaks and 
 However, the average C++ programmer causes more issues doing manual memory management for single objects; so you are likely better off using smart pointers.
 
 Likewise, using `std::string` is usually less error-prone than fiddling around with the C standard library's string API.
-Even though it uses dynamic allocation under the hood.
 
 So, when you decide for or against using certain language features, don't blindly accept someone else's recommendation.
 Base your decision on a clear understanding of the benefits and drawbacks.
 If you think you are missing something, ask your peers why, or why not to use the feature and demand a **technical** answer.
-
-That said, I believe that object oriented programming is overhyped and commonly leads to more problems than it solves.
 
 ## Modules are Dead on Arrival
 
