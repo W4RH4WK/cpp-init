@@ -59,6 +59,8 @@ However, marking them `const` as well is technically safer.
 
 `const` should not be used when returning values or for non-static member variables (consider a getter instead).
 
+I currently prefer east-const (`Foo const&`) over west-const (`const Foo&`) since west-const is incompatible with abbreviated function templates using concepts — the `auto` keyword has to follow the concept identifier.
+
 ## `struct` vs. `class`
 
 There's hardly any difference whether you use the keyword `struct` or `class` for defining a type in C++.
@@ -87,7 +89,7 @@ Tracking state changes here reliably is practically impossible.
 While the program may still be deterministic, it's very hard to reason about such programs.
 
 OOP encourages **encapsulation**, which effectively hides mutable state inside objects, such that it is not directly observable from outside the object.
-This is needed to maintain invariants when employing an object oriented architecture, but obfuscates the application state and state changes even further.
+This is needed to maintain invariants when employing an object oriented architecture, but obscures the application state and state changes even further.
 Effectively, many method calls become unpredictable as they depend on internal, invisible state of their and other, referenced objects.
 This is descent into madness.
 

@@ -17,23 +17,25 @@ At the same time, it's also my least preferred way of doing error handling:
   To be safe, one has to employ catch-all (`catch (...)`) everywhere.
 
 - In C++, anything can be thrown.
-  While derivatives of `std::exception` are highly encouraged, `throw 42` is valid C++.
+  While derivatives of `std::runtime_error` are highly encouraged, `throw 42` is valid C++.
 
-- The guidelines say, exceptions are for _exceptional_ behavior — without giving a clear definition of what is _exceptional_ and what is not.
+- The core guidelines say, exceptions are for _exceptional_ behavior — without giving a clear definition on what is _exceptional_ and what is not.
   Either way, this means that there should be some other mechanism to communicate errors, apart from throwing exceptions.
 
-- Exceptions can be turned off with a compiler flag, which can lead to undefined behavior.
+- Exceptions can be turned off with a compiler flag, which can lead to compilation errors or undefined behavior.
 
 The primary benefit of exceptions is that they can be thrown in a constructor to indicate construction failure.
 This cannot be mimicked with status codes or output parameters, making by-the-book RAII a bit trickier to implement.
+However, throwing inside a constructor is not trivial.
+While members are destroyed, the destructor is *not* executed.
 
 Note that even with exceptions there's no guarantee that an object will not end up in an invalid state.
-While an object may have been constructed successfully, one of its member functions could still throw at some point, leaving the object in an invalid state.
+While an object may have been constructed successfully, member functions could still throw at some point, leaving the object in an invalid state.
 
 A second benefit that should be pointed is that exceptions can carry arbitrary data.
 
 Over all, exceptions do not appear to be the right tool for building robust, predictable systems.
-Furthermore, they likely increase code complexity as they only cover _exception_ error cases.
+Furthermore, they likely increase code complexity as they only cover _exceptional_ error cases.
 
 ## Status Code
 
@@ -73,13 +75,13 @@ struct [[nodiscard]] Status {
 };
 ```
 
-The main reason for `Status` is to invert the boolean evaluation; success being `true`, failure being `false`.
+The main reason for `Status` is to invert the boolean evaluation of `StatusCode`; success being `true`, failure being `false`.
 Other convenience functions may include `toString` to make errors human readable.
 
 Note that the whole struct is marked `[[nodiscard]]`.
 This way, any call to a function that returns a `Status` emits a warning if the return value is not handled.
 
-Depending on how we proceed with error reporting (see below), we may want to include a `std::string` here for additional context.
+Depending on how we proceed with error reporting (see below), we may want to include a `std::string` here for additional context — although, this could end up being too expensive.
 
 Here's how this mechanism is used.
 
@@ -133,7 +135,7 @@ Status AudioTrack::load(std::string_view identifier)
 
 Some people may find it irritating that the output parameter is not immediately recognizable on the call-site.
 My convention is to have (non-optional) output parameters at the beginning.
-Alternatively one can introduce a minimal wrapper for the reference to explicitly annotate the output parameter.
+Alternatively one can introduce a minimal wrapper for the reference to explicitly annotate the output parameter or prefer using a raw pointer.
 
 ```c++
 ByteBuffer buffer;
@@ -254,7 +256,7 @@ The assignment being inside the macro invocation lessens readability.
 
 Think about how to write a function in such a way that (N)RVO kicks in.
 
-Furthermore, implementations like `std::expected` may not be marked `[[nodiscard]]`, which means that every function has to be annotated accordingly.
+Furthermore, implementations like `std::expected` are not marked `[[nodiscard]]`, which means that every function has to be annotated accordingly.
 
 `std::expected` was introduced with C++23 and has therefore relatively low adoption.
 Other result type implementations, like [Boost Outcome](https://www.boost.org/doc/libs/1_85_0/libs/outcome) or [`absl::StatusOr`](https://abseil.io/docs/cpp/guides/status) have been around for a while, but didn't manage to become the go to solution for error handling.
