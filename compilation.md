@@ -16,6 +16,8 @@ Ignoring the build system, these are the main stages when invoking the compiler 
 The linker is concerned with **symbols**, which are identifiers for functions, variables, etc.
 Symbols can have different visibility, which is also referred to as **linkage**.
 
+See this [🎥 video](https://www.youtube.com/watch?v=H6IAPC20Oqg) for a quick overview.
+
 ## Static vs. Dynamic Library
 
 Libraries commonly come in two different types.
